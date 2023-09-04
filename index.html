@@ -1,63 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Gráfico de Faturamento 2º Semestre 2023</title>
-    <!-- Inclua a biblioteca do Google Visualization e o Google Charts -->
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {'packages':['corechart']});
-        google.charts.setOnLoadCallback(drawChart);
-
-        function drawChart() {
-            // URL da planilha do Google Sheets
-            var spreadsheetID = '1tTwdpV7G8M7JIFLjdQihBvopMbZjW22W_WwkZRc3sZs';
-
-            // Sua API Key
-            var apiKey = 'AIzaSyDXxy5eAzOaeVNojHpAHiX3l5jpSAY03Nk';
-
-            // URL da API do Google Sheets
-            var url = 'https://sheets.googleapis.com/v4/spreadsheets/' + spreadsheetID + '/values/A2:A7?key=' + apiKey;
-
-            // Use AJAX para buscar os dados da planilha
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    var data = JSON.parse(xhr.responseText);
-
-                    // Crie um array de dados no formato esperado pelo Google Charts
-                    var chartData = [['Mês', 'Faturamento']];
-                    for (var i = 0; i < data.values.length; i++) {
-                        var month = data.values[i][0];
-                        var revenue = parseFloat(data.values[i][1]);
-                        chartData.push([month, revenue]);
-                    }
-
-                    // Crie uma tabela de dados do Google Charts
-                    var dataTable = google.visualization.arrayToDataTable(chartData);
-
-                    // Opções do gráfico
-                    var options = {
-                        title: 'Faturamento 2º Semestre 2023',
-                        hAxis: {
-                            title: 'Mês'
-                        },
-                        vAxis: {
-                            title: 'Faturamento'
-                        }
-                    };
-
-                    // Crie um gráfico de colunas
-                    var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
-                    chart.draw(dataTable, options);
-                }
-            };
-            xhr.send();
-        }
-    </script>
+    <title>Contador</title>
 </head>
 <body>
-    <!-- O gráfico será exibido aqui -->
-    <div id="chart_div" style="width: 800px; height: 400px;"></div>
+    <h1>Contador</h1>
+    <p>Valor: <span id="contador">0</span></p>
+    <button onclick="aumentar()">+</button>
+    <button onclick="diminuir()">-</button>
+
+    <script>
+        // Função para aumentar o valor
+        function aumentar() {
+            var contador = document.getElementById("contador");
+            var valor = parseInt(contador.innerHTML);
+            valor++;
+            contador.innerHTML = valor;
+        }
+
+        // Função para diminuir o valor
+        function diminuir() {
+            var contador = document.getElementById("contador");
+            var valor = parseInt(contador.innerHTML);
+            valor--;
+            contador.innerHTML = valor;
+        }
+    </script>
 </body>
 </html>
